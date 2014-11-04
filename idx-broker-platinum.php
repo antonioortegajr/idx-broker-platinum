@@ -3,7 +3,7 @@
 Plugin Name: IDX Broker
 Plugin URI: http://www.idxbroker.com
 Description: Over 550 IDX/MLS feeds serviced. The #1 IDX/MLS solution just got even better!
-Version: 1.1.5
+Version: 1.1.6
 Author: IDX Broker
 Contributors: IDX, LLC
 Author URI: http://www.idxbroker.com/
@@ -22,11 +22,34 @@ $plugin = plugin_basename(__FILE__);
 $api_error = false;
 
 
+include_once('idx-broker-wrapper.php');
+
+
 define('SHORTCODE_SYSTEM_LINK', 'idx-platinum-system-link');
 define('SHORTCODE_SAVED_LINK', 'idx-platinum-saved-link');
 define('SHORTCODE_WIDGET', 'idx-platinum-widget');
 define( 'IDX__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'IDX_WP_PLUGIN_VERSION', '1.1.5' );
+define( 'IDX_WP_PLUGIN_VERSION', '1.1.6' );
+
+################################################################################
+// Add Admin Pages
+################################################################################
+add_action( 'admin_menu', 'register_idxbroker_admin_pages' );
+
+function register_idxbroker_admin_pages(){
+
+	// Settings Page
+	add_menu_page( 'IDX Broker', 'IDX Broker', 'manage_options', 'options-general.php?page=idx-broker-platinum', '', '', 3);
+
+	// If no API set don't display IDX Sub Pages
+	if(get_option('idx_broker_apikey') == '') { } else {
+
+	// IDX Wrapper
+	add_submenu_page( 'options-general.php?page=idx-broker-platinum', 'IDX Broker Wrappers', 'Dynamic Wrappers', 'manage_options', '/edit.php?post_type=idxbroker-wrapper', '', '');
+
+	}
+}
+
 
 //Adds a comment declaring the version of the WordPress.
 add_action('wp_head', 'display_wpversion');
@@ -62,6 +85,19 @@ function wp_api_script() {
 	wp_enqueue_script( 'custom-scriptLeaf' );
 	wp_enqueue_script( 'custom-scriptMQ' );
 } // end wp_api_script fn
+
+
+/**
+ * DNS Prefetch (for performance) for Map Libraries required by IDX Broker
+ */
+function idxbroker_map_dnsprefetch() {
+  echo "\n<!-- DNS Prefetch for IDX Broker Map CSS & Scripts -->\n";
+  echo "<link rel='dns-prefetch' href='//idxdyncdn.idxbroker.com' />\n";
+  echo "<link rel='dns-prefetch' href='//www.mapquestapi.com' />\n";
+  echo "<link rel='dns-prefetch' href='//cdn.leafletjs.com' />\n";
+  echo "<link rel='dns-prefetch' href='//ecn.dev.virtualearth.net' />\n\n";
+}
+add_filter('wp_head','idxbroker_map_dnsprefetch', 0);
 
 
 /**
@@ -1311,3 +1347,23 @@ add_action( 'init', 'permalink_update_warning');
 add_filter( 'wp_list_pages', 'idxplatinum_page_links_to_highlight_tabs', 9);
 add_filter( 'page_link', 'idxplatinum_filter_links_to_pages', 20, 2);
 add_filter( 'post_link', 'idxplatinum_filter_links_to_pages', 20, 2);
+
+
+/**
+ * Function to perform clean uninstall
+ */
+register_deactivation_hook( __FILE__, 'idxbroker_uninstall' );
+
+function idxbroker_uninstall(){
+    global $wpdb;
+
+    // Delete our Options
+    delete_option( 'idx_broker_apikey' );
+    delete_option( 'idx_broker_admin_page_tab' );
+
+    // Delete our Transients
+    delete_transient('idx_systemlinks_cache');
+    delete_transient('idx_savedlink_cache');
+    delete_transient('idx_widget_cache');
+
+}
