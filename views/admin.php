@@ -45,15 +45,49 @@
 ?>
 
 <div id="idxPluginWrap" class="wrap">
-	<a href="http://www.idxbroker.com" target="_blank">
-		<div id="logo"></div>
+	<?php
+
+	//check account level to show proper branding
+
+	$level = get_transient('idx_accounttype_cache');
+
+	if ($level == ''){
+
+		$logo_link = 'http://www.idxbroker.com';
+		$level_logo	 = '';
+$reg = '';
+
+	}
+
+else if ($level == 'IDX Broker Platinum'){
+		$logo_link = 'http://www.idxbroker.com';
+		$level_logo	 = plugins_url('../images/pt.png', __FILE__);
+$reg = '&reg;';
+	}
+
+	else {
+
+		$logo_link = 'http://www.idxbroker.com/features/upgrade-center';
+		$level_logo	 = plugins_url('../images/lt.png', __FILE__);
+$reg = '&reg;';
+	};
+
+
+echo '<div id="level_logo"><img src="' . $level_logo . '"></div>
+<a href="' . $logo_link . '" target="_blank">
+		<div id="logo">
+		</div>
 	</a>
+
+
 	<div style="display: table; width: 87%;">
-		<h2 class="flft">IDX Broker Platinum&reg; Plugin Settings</h2>
+		<h2 class="flft">';
+
+ echo get_transient('idx_accounttype_cache') .  $reg;?> Plugin Settings</h2>
 		<br clear="all"/>
 		<span class="label">Useful Links:</span>
 		<ul class="usefulLinks">
-			<li><a href="http://kb.idxbroker.com/Knowledgebase/List/Index/16/wordpress-integration" target="_blank">IDX Broker Platinum Knowledgebase</a></li>
+			<li><a href="http://kb.idxbroker.com/Knowledgebase/List/Index/16/wordpress-integration" target="_blank">IDX Broker Knowledgebase</a></li>
 			<li><a href="http://middleware.idxbroker.com/mgmt/login.php" target="_blank">Login to Your Control Panel</a></li>
 			<li><a href="mailto:help@idxbroker.com?Subject=Help me with WordPress" target="_blank">Contact IDX Broker</a></li>
 		</ul>
