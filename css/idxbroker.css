@@ -18,15 +18,15 @@
 	height: 19px;
 }
 #save_changes {
-	border-color:#4a649b !important; 
+	border-color:#4a649b !important;
 	background-image: url(../images/button-grad.png) !important;
 }
 #logo {
 	background-image: url(../images/logo-wp.png);
 	background-repeat: no-repeat;
 	background-position: bottom;
-	width: 97px;
-	height: 40px;
+	width: 150px;
+	height: 60px;
 	float: right;
 	padding-top:5px;
 }
@@ -89,7 +89,7 @@ input[type=text].error {
 	vertical-align: middle;
 	border-bottom: 0;
 	border-top: 0;
-	border-right: 0;	
+	border-right: 0;
 }
 
 #genSettings li {
@@ -152,7 +152,7 @@ span.label, span.refresh_status, span.wrapper_status {
 	width: 270px;
 }
 input#api_update, input#save_changes, a#api_update input#update_idxlinks a#update_idxlinks, input#idx_broker_creaet_wrapper_page {
-	border-color:#4a649b !important; 
+	border-color:#4a649b !important;
 	background-image: url(../images/button-grad.png) !important;
 }
 
@@ -262,12 +262,12 @@ input#idx_broker_dynamic_wrapper_page {
     padding: 4px 6px 5px 6px;
     border-bottom: none;
 }
- 
+
 #tabs li a.icon_accept {
     background-position: 5px;
     background-repeat: no-repeat;
 }
- 
+
 #tabs_content_container {
     background-color: #ffffff;
     border: 1px solid #ccc;mini
@@ -282,6 +282,19 @@ input#idx_broker_dynamic_wrapper_page {
 	float:left;
 	padding:5px;
 }
+
+#level_logo{
+background-repeat: no-repeat;
+background-position: bottom;
+width: 97px;
+height: 40px;
+float: right;
+padding-top: 5px;
+}
+
+
+
+
 /* End Tinymce idx popup button styles*/
 #tab1 div:nth-child(even), #tab2 div:nth-child(even), #tab3 div:nth-child(even) {background: #FFF;}
 #tab1 div:nth-child(odd), #tab2 div:nth-child(odd), #tab3 div:nth-child(odd) {background: #F1F1F1;}
