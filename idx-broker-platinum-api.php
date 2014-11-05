@@ -164,4 +164,3 @@ function apiResponse ($response) {
 function check_curl_enabled() {
 	return function_exists('curl_init');
 }
-
