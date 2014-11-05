@@ -98,6 +98,42 @@ function idx_platinum_get_widgets () {
 } // end get platinum widgets API call fn
 
 /**
+*
+* Using our web services function, lets get the accounttype.
+*
+*/
+function idx_platinum_get_accounttype () {
+	if(!get_option('idx_broker_apikey'))
+		return false;
+
+	$request = new WP_Http;
+	$headers = array(
+		'Content-Type' => 'application/x-www-form-urlencoded',
+		'accesskey' => get_option('idx_broker_apikey'),
+		'outputtype' => 'json'
+	);
+
+	$response = $request->request('https://api.idxbroker.com/clients/accounttype', array( 'sslverify' => false, 'headers' => $headers ));
+	$response = (array)$response;
+
+	extract(apiResponse($response)); // get code and error message if any, assigned to vars $code and $error
+	if ($error !== false) {
+		if ($code == 401)
+			delete_transient('idx_accounttype_cache');
+		return new WP_Error("idx_api_error", __("Error {$code}: $error"));
+	}
+	else {
+		$idx_accounttype = ($code == 200 && isset($response['body'])) ? json_decode($response['body']) : array();
+		set_transient('idx_accounttype_cache', $idx_accounttype, 29600);
+		return $idx_accounttype;
+	}
+} // end get platinum accounttype API call fn
+
+
+
+
+
+/**
  * apiResponse handles the various replies we get from the IDX Broker API and returns appropriate error messages.
  * @param  [array] $response [response header from API call]
  * @return [array]           [keys: 'code' => response code, 'error' => false (default), or error message if one is found]
