@@ -264,6 +264,7 @@ function idx_broker_platinum_options_init() {
 	if (get_option('idx_broker_apikey') != '') {
 		$system_links_cache = get_transient('idx_systemlinks_cache');
 		$saved_links_cache = get_transient('idx_savedlink_cache');
+		$accounttype_cache = get_transient('accounttype_cache');
 		if($system_links_cache) {
 			$systemlinks = $system_links_cache;
 		} else {
@@ -284,6 +285,17 @@ function idx_broker_platinum_options_init() {
 				$savedlinks = '';
 			}
 		}
+
+if($accounttype_cache) {
+	$accounttype = $accounttype_cache;
+} else {
+	$accounttype = idx_platinum_get_accounttype();
+
+	if( is_wp_error($accounttype) ) {
+		$api_error = $accounttype->get_error_message();
+		$accounttype = '';
+	}
+}
 
 		if(isset($_COOKIE["api_refresh"]) && $_COOKIE["api_refresh"] == 1)
 		{
@@ -448,6 +460,9 @@ function idx_refreshapi() {
 	}
 	if(get_transient('idx_widget_cache')) {
 		delete_transient('idx_widget_cache');
+	}
+	if(get_transient('idx_accounttype_cache')) {
+		delete_transient('idx_accounttype_cache');
 	}
 	if(get_transient('idx_systemlinks_cache')) {
 		delete_transient('idx_systemlinks_cache');
@@ -1365,5 +1380,6 @@ function idxbroker_uninstall(){
     delete_transient('idx_systemlinks_cache');
     delete_transient('idx_savedlink_cache');
     delete_transient('idx_widget_cache');
+		delete_transient('idx_accounttype_cache');
 
 }
