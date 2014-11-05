@@ -1,4 +1,8 @@
 === IDX Broker Wordpress Plugin ===
+<!-- DISCLAIMER: THIS PLUGIN IS MY OWN FORK AND IS NOT THE OFFCIAL IDX BROKER PLUGIN!!
+YOU AT YOUR OWN RISK!! PLEASE DO NOT CONTACT IDX BROKER FOR ANY TYPE OF SUPPORT WHEN USING MY FORK OF THIER PLUGIN
+-->
+
 Author: IDX Broker
 Contributors: idxco
 Author URL: http://www.idxbroker.com
@@ -88,6 +92,12 @@ Yes. IDX Broker provides you with a sign up Widget, sign up links, a lead manage
 6. Adding Shortcodes.
 
 == Changelog ==
+= 1.1.7 =
+
+* Added Lt and Pt Branding to admin page
+* Removed beta images
+
+
 = 1.1.6 =
 * Added DNS Prefetch for map scripts to improve site performance
 * Added new method to create Dynamic Wrappers using Custom Post Types
