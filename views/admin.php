@@ -47,7 +47,7 @@
 <div id="idxPluginWrap" class="wrap">
 	<?php
 
-	//check account level to show proper branding
+//check account level to show proper branding
 
 	$level = get_transient('idx_accounttype_cache');
 
@@ -63,6 +63,7 @@ else if ($level == 'IDX Broker Platinum'){
 		$logo_link = 'http://www.idxbroker.com';
 		$level_logo	 = plugins_url('../images/pt.png', __FILE__);
 $reg = '&reg;';
+$upgrade = '';
 	}
 
 	else {
@@ -70,6 +71,7 @@ $reg = '&reg;';
 		$logo_link = 'http://www.idxbroker.com/features/upgrade-center';
 		$level_logo	 = plugins_url('../images/lt.png', __FILE__);
 $reg = '&reg;';
+$upgrade = '<a href="http://www.idxbroker.com/features/upgrade-center" target="_blank">Upgrade to Platinum!</a>';
 	};
 
 
@@ -77,10 +79,7 @@ echo '<div id="level_logo"><img src="' . $level_logo . '"></div>
 <a href="' . $logo_link . '" target="_blank">
 		<div id="logo">
 		</div>
-	</a>
-
-
-	<div style="display: table; width: 87%;">
+	</a>' . $upgrade . '<div style="display: table; width: 87%;">
 		<h2 class="flft">';
 
  echo get_transient('idx_accounttype_cache') .  $reg;?> Plugin Settings</h2>
